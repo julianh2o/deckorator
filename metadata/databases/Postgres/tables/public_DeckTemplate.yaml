@@ -1,0 +1,18 @@
+table:
+  name: DeckTemplate
+  schema: public
+array_relationships:
+  - name: DeckTemplateCards
+    using:
+      foreign_key_constraint_on:
+        column: deckTemplate_id
+        table:
+          name: DeckTemplateCard
+          schema: public
+  - name: Decks
+    using:
+      foreign_key_constraint_on:
+        column: deckTemplate_id
+        table:
+          name: Deck
+          schema: public

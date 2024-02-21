@@ -1,0 +1,7 @@
+table:
+  name: GeneratedImage
+  schema: public
+object_relationships:
+  - name: Generation
+    using:
+      foreign_key_constraint_on: generation_id

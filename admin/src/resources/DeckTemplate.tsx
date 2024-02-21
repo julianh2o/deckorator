@@ -47,7 +47,7 @@ export const DeckTemplateShow = () => (
       <DateField source="created_at" />
       <DateField source="updated_at" />
       <ReferenceManyField
-        reference="deckorator_DeckTemplateCard"
+        reference="DeckTemplateCard"
         target="deckTemplateId"
       >
         <Datagrid>
@@ -56,7 +56,7 @@ export const DeckTemplateShow = () => (
       </ReferenceManyField>
       <Button
         component={Link}
-        to={`/deckorator_DeckTemplateCard/create?deckTemplateId=${1}`}
+        to={`/DeckTemplateCard/create?deckTemplateId=${1}`}
         label="Add card"
       ></Button>
     </SimpleShowLayout>

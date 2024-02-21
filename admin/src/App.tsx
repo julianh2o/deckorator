@@ -46,7 +46,7 @@ const App = () => {
     <ApolloProvider client={client}>
       <Admin authProvider={authProvider} dataProvider={dataProvider}>
         <Resource
-          name="deckorator_DeckTemplate"
+          name="DeckTemplate"
           options={{ label: "Deck Templates" }}
           list={DeckTemplateList}
           show={DeckTemplateShow}
@@ -54,7 +54,7 @@ const App = () => {
           create={DeckTemplateCreate}
         />
         <Resource
-          name="deckorator_DeckTemplateCard"
+          name="DeckTemplateCard"
           options={{ label: "Deck Template Cards" }}
           // list={DeckTemplateCardList}
           show={DeckTemplateCardShow}
@@ -62,7 +62,7 @@ const App = () => {
           create={DeckTemplateCardCreate}
         />
         <CustomRoutes>
-          <Route path="/app" element={<DeckView id={1} />} />
+          <Route path="/deck" element={<DeckView id={8} />} />
         </CustomRoutes>
       </Admin>
     </ApolloProvider>

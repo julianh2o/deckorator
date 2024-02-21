@@ -1,0 +1,26 @@
+table:
+  name: Deck
+  schema: public
+object_relationships:
+  - name: DeckTemplate
+    using:
+      foreign_key_constraint_on: deckTemplate_id
+array_relationships:
+  - name: DeckCards
+    using:
+      foreign_key_constraint_on:
+        column: deck_id
+        table:
+          name: DeckCard
+          schema: public
+event_triggers:
+  - name: PopulateDeck
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{DECKORATOR_SERVER_URL}}/populateDeckFromTemplate'

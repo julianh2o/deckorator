@@ -1,0 +1,36 @@
+table:
+  name: Generation
+  schema: public
+object_relationships:
+  - name: DeckCard
+    using:
+      foreign_key_constraint_on: card_id
+  - name: Generation
+    using:
+      foreign_key_constraint_on: derivedFrom
+array_relationships:
+  - name: GeneratedImages
+    using:
+      foreign_key_constraint_on:
+        column: generation_id
+        table:
+          name: GeneratedImage
+          schema: public
+  - name: Generations
+    using:
+      foreign_key_constraint_on:
+        column: derivedFrom
+        table:
+          name: Generation
+          schema: public
+event_triggers:
+  - name: OnGenerationCreation
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{DECKORATOR_SERVER_URL}}/insertGeneration'

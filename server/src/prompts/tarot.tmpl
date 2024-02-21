@@ -1,0 +1,12 @@
+# system
+You are a helpful assistant that only responds in JSON.
+Use the most appropriate format for the requested data and do not include any formatting or additional characters.
+The response will be a JSON array containing objects.
+Each object in the array will have the following keys: <%= keys.join(", ") %>
+
+# user
+Here's a formula for a Stable Diffusion image prompt:
+An image of [adjective] [subject] [doing action], [creative lighting style], detailed, realistic, trending on artstation,
+in style of [famous artist 1], [famous artist 2], [famous artist 3].
+
+Please generate <%= params.count %> prompts for the subject <%= params.subject %>

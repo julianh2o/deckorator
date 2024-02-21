@@ -1,0 +1,6 @@
+- "!include public_Deck.yaml"
+- "!include public_DeckCard.yaml"
+- "!include public_DeckTemplate.yaml"
+- "!include public_DeckTemplateCard.yaml"
+- "!include public_GeneratedImage.yaml"
+- "!include public_Generation.yaml"
