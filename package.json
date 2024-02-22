@@ -1,0 +1,10 @@
+{
+  "name": "deckorator",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "hasura:bootstrap": "(cd hasura && hasura metadata apply && hasura migrate apply && hasura metadata apply && hasura migrate status)"
+  },
+  "author": "",
+  "license": "ISC"
+}
