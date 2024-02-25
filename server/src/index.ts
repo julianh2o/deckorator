@@ -5,49 +5,20 @@ import dotenv from "dotenv";
 import fs from "fs";
 import _ from "lodash";
 import { chatCompletion, execTemplate } from './utils/gpt.js';
-import * as comfyui from './utils/comfyui.js';
 import minio from "./utils/minio.js";
+import p from "p-iteration";
+import { getTemplateCards } from './utils/model/query/getTemplateCards.js';
+import { client } from './utils/model/apolloClient.js';
 
 const app: Express = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
-const HASURA_ENDPOINT = process.env.HASURA_ENDPOINT;
-
-const GET_TEMPLATE_CARDS = gql`
-  query GetTemplateCards($deckTemplate_id: Int) {
-    DeckTemplateCard(where: { deckTemplate_id: { _eq: $deckTemplate_id } }) {
-      id
-      index
-      name
-      config
-    }
-  }
-`;
-
-const INSERT_DECK_CARD = gql`
-  mutation InsertDeckCard($cards: [DeckCard_insert_input!]!) {
-    insert_DeckCard(objects: $cards) {
-      returning {
-        id
-      }
-    }
-  }
-`;
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: HASURA_ENDPOINT,
-});
-
 // Triggered when a new Deck is inserted
 // This inserts a full deck of cards based on the specified DeckTemplate
 app.post("/populateDeckFromTemplate", async (req: Request, res: Response) => {
   const { id: deck_id, deckTemplate_id } = req.body.event.data.new;
-  const getTemplateCardsResult = await client.query({
-    query: GET_TEMPLATE_CARDS,
-    variables: { deckTemplate_id },
-  });
-  const cards = _.get(getTemplateCardsResult, "data.DeckTemplateCard");
+  const cards = await getTemplateCards(deckTemplate_id);
+
   let index = 1;
   const inserts = _.map(cards, (card) => ({
     index: index++,
@@ -56,10 +27,7 @@ app.post("/populateDeckFromTemplate", async (req: Request, res: Response) => {
     deckTemplateCard_id: card.id,
     config: card.config
   }));
-  await client.mutate({
-    mutation: INSERT_DECK_CARD,
-    variables: { cards: inserts }
-  });
+
   res.sendStatus(200);
 });
 
@@ -77,8 +45,6 @@ type GenerationModel = {
 
 
 
-// Triggered when a new Deck is inserted
-// This inserts a full deck of cards based on the specified DeckTemplate
 app.post("/insertGeneration", async (req: Request, res: Response) => {
   await fs.promises.writeFile("./insertGeneration.json", JSON.stringify(req.body, undefined, 2));
   console.log("insertGeneration called");
@@ -115,15 +81,28 @@ app.get("/testGpt", async (req: Request, res: Response) => {
   res.send(`<pre>${JSON.stringify(out, undefined, 2)}</pre>`);
 });
 
+const CreateDeckTemplateWithCard = gql`
+mutation CreateDeckTemplateWithCard {
+  insert_DeckTemplate(objects: {
+    name: "Test Deck Template",
+    DeckTemplateCards: {
+      data: {
+        index: 1,
+        name: "Test Card"
+      }
+    }
+  }) {
+    returning {
+      id
+    }
+  }
+}
+`;
+
 app.get("/", async (req: Request, res: Response) => {
-  const out = await comfyui.runImageWorkflow("resources/sdxl_api2.json", {
-    linguistic: "emma watson in a library",
-    positive: "sexy librarian 3d render",
-    negative: "blurry",
-    width: 1008, height: 1440,
-    batch_size: 3,
-  });
-  res.send(out);
+  const out = await client.mutate({ mutation: CreateDeckTemplateWithCard });
+  console.log(out);
+  res.send("ok");
 });
 
 app.listen(port, () => {

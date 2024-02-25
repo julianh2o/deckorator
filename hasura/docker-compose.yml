@@ -1,5 +1,13 @@
 version: "3.6"
 services:
+  redis:
+    image: redis:7
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
   postgres:
     image: postgres:15
     restart: always
@@ -51,3 +59,4 @@ services:
       start_period: 5s
 volumes:
   db_data:
+  redis_data:
