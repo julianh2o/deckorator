@@ -12,7 +12,7 @@
     "codegen:schema": "graphql-codegen --config=codegen.schema.yaml",
     "codegen:gql": "gqlg --schemaFilePath ./src/generated/all.graphql --destDirPath ./src/generated/gql --depthLimit 2 --includeCrossReferences",
     "codegen:hooks": "graphql-codegen --config=codegen.hooks.yaml",
-    "codegen": "npm run codegen:schema && npm run codegen:gql && npm run codegen:hooks"
+    "codegen": "npm run codegen:schema && npm run codegen:gql && npm run codegen:hooks",
   },
   "author": "",
   "license": "ISC",
