@@ -49,6 +49,7 @@ app.post("/insertGeneration", async (req: Request, res: Response) => {
   await fs.promises.writeFile("./insertGeneration.json", JSON.stringify(req.body, undefined, 2));
   console.log("insertGeneration called");
   const generation = req.body.event.data.new as GenerationModel;
+  const generationDeep = await getGenerationDeep(generation.card_id);
   // const getTemplateCardsResult = await client.query({
   //   query: GET_TEMPLATE_CARDS,
   //   variables: { deckTemplate_id },

@@ -1,0 +1,14 @@
+mutation delete_DeckTemplateCard($where: DeckTemplateCard_bool_exp!){
+    delete_DeckTemplateCard(where: $where){
+        affected_rows
+        returning{
+            config
+            created_at
+            deckTemplate_id
+            id
+            index
+            name
+            updated_at
+        }
+    }
+}

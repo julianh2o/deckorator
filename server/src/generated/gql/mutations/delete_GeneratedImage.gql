@@ -1,0 +1,13 @@
+mutation delete_GeneratedImage($where: GeneratedImage_bool_exp!){
+    delete_GeneratedImage(where: $where){
+        affected_rows
+        returning{
+            created_at
+            generation_id
+            id
+            image
+            type
+            updated_at
+        }
+    }
+}

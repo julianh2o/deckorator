@@ -1,0 +1,15 @@
+overwrite: true
+schema:
+  - ./src/generated/all.graphql
+documents:
+  - ./src/generated/gql/queries/**/*.gql
+  - ./src/generated/gql/mutations/**/*.gql
+  - ./src/generated/models.ts
+generates:
+  ./src/generated/client/:
+    preset: "client"
+  ./src/generated/app.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-apollo-client-helpers

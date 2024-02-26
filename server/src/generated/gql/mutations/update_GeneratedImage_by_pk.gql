@@ -1,0 +1,21 @@
+mutation update_GeneratedImage_by_pk($_inc: GeneratedImage_inc_input, $_set: GeneratedImage_set_input, $pk_columns: GeneratedImage_pk_columns_input!){
+    update_GeneratedImage_by_pk(_inc: $_inc, _set: $_set, pk_columns: $pk_columns){
+        Generation{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        created_at
+        generation_id
+        id
+        image
+        type
+        updated_at
+    }
+}

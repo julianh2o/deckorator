@@ -1,0 +1,16 @@
+mutation insert_Generation($objects: [Generation_insert_input!]!, $on_conflict: Generation_on_conflict){
+    insert_Generation(objects: $objects, on_conflict: $on_conflict){
+        affected_rows
+        returning{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+    }
+}

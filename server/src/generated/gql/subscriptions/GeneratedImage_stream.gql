@@ -1,0 +1,21 @@
+subscription GeneratedImage_stream($batch_size: Int!, $cursor: [GeneratedImage_stream_cursor_input]!, $where: GeneratedImage_bool_exp){
+    GeneratedImage_stream(batch_size: $batch_size, cursor: $cursor, where: $where){
+        Generation{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        created_at
+        generation_id
+        id
+        image
+        type
+        updated_at
+    }
+}

@@ -1,0 +1,11 @@
+mutation insert_DeckTemplate($objects: [DeckTemplate_insert_input!]!, $on_conflict: DeckTemplate_on_conflict){
+    insert_DeckTemplate(objects: $objects, on_conflict: $on_conflict){
+        affected_rows
+        returning{
+            created_at
+            id
+            name
+            updated_at
+        }
+    }
+}

@@ -1,0 +1,53 @@
+mutation delete_Generation_by_pk($distinct_on: [GeneratedImage_select_column!], $limit: Int, $offset: Int, $order_by: [GeneratedImage_order_by!], $where: GeneratedImage_bool_exp, $distinct_on1: [Generation_select_column!], $limit1: Int, $offset1: Int, $order_by1: [Generation_order_by!], $where1: Generation_bool_exp, $id: Int!){
+    delete_Generation_by_pk(id: $id){
+        DeckCard{
+            config
+            created_at
+            deckTemplateCard_id
+            deck_id
+            id
+            index
+            name
+            updated_at
+        }
+        GeneratedImages(distinct_on: $distinct_on, limit: $limit, offset: $offset, order_by: $order_by, where: $where){
+            created_at
+            generation_id
+            id
+            image
+            type
+            updated_at
+        }
+        Generation{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        Generations(distinct_on: $distinct_on1, limit: $limit1, offset: $offset1, order_by: $order_by1, where: $where1){
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        batch
+        card_id
+        config
+        created_at
+        derivedFrom
+        id
+        prompt
+        updated_at
+        variationText
+    }
+}

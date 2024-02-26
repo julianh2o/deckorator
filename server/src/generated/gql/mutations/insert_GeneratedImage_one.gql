@@ -1,0 +1,21 @@
+mutation insert_GeneratedImage_one($object: GeneratedImage_insert_input!, $on_conflict: GeneratedImage_on_conflict){
+    insert_GeneratedImage_one(object: $object, on_conflict: $on_conflict){
+        Generation{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        created_at
+        generation_id
+        id
+        image
+        type
+        updated_at
+    }
+}

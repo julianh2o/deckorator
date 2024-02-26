@@ -1,0 +1,15 @@
+mutation update_DeckCard($_inc: DeckCard_inc_input, $_set: DeckCard_set_input, $where: DeckCard_bool_exp!){
+    update_DeckCard(_inc: $_inc, _set: $_set, where: $where){
+        affected_rows
+        returning{
+            config
+            created_at
+            deckTemplateCard_id
+            deck_id
+            id
+            index
+            name
+            updated_at
+        }
+    }
+}

@@ -1,0 +1,21 @@
+subscription GeneratedImage_by_pk($id: Int!){
+    GeneratedImage_by_pk(id: $id){
+        Generation{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        created_at
+        generation_id
+        id
+        image
+        type
+        updated_at
+    }
+}

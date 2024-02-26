@@ -1,0 +1,12 @@
+mutation update_Deck_many($updates: [Deck_updates!]!){
+    update_Deck_many(updates: $updates){
+        affected_rows
+        returning{
+            created_at
+            deckTemplate_id
+            id
+            name
+            updated_at
+        }
+    }
+}

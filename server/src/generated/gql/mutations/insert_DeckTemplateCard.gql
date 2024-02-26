@@ -1,0 +1,14 @@
+mutation insert_DeckTemplateCard($objects: [DeckTemplateCard_insert_input!]!, $on_conflict: DeckTemplateCard_on_conflict){
+    insert_DeckTemplateCard(objects: $objects, on_conflict: $on_conflict){
+        affected_rows
+        returning{
+            config
+            created_at
+            deckTemplate_id
+            id
+            index
+            name
+            updated_at
+        }
+    }
+}

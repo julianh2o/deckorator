@@ -1,0 +1,13 @@
+mutation insert_GeneratedImage($objects: [GeneratedImage_insert_input!]!, $on_conflict: GeneratedImage_on_conflict){
+    insert_GeneratedImage(objects: $objects, on_conflict: $on_conflict){
+        affected_rows
+        returning{
+            created_at
+            generation_id
+            id
+            image
+            type
+            updated_at
+        }
+    }
+}

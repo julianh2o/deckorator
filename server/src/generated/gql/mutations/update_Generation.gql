@@ -1,0 +1,16 @@
+mutation update_Generation($_inc: Generation_inc_input, $_set: Generation_set_input, $where: Generation_bool_exp!){
+    update_Generation(_inc: $_inc, _set: $_set, where: $where){
+        affected_rows
+        returning{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+    }
+}

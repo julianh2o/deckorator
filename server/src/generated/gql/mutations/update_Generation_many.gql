@@ -1,0 +1,16 @@
+mutation update_Generation_many($updates: [Generation_updates!]!){
+    update_Generation_many(updates: $updates){
+        affected_rows
+        returning{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+    }
+}

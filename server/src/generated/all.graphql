@@ -1,0 +1,3928 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+
+  """measured in seconds"""
+  ttl: Int! = 60
+) on QUERY
+
+"""
+columns and relationships of "Deck"
+"""
+type Deck {
+  """An array relationship"""
+  DeckCards(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): [DeckCard!]!
+
+  """An aggregate relationship"""
+  DeckCards_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): DeckCard_aggregate!
+
+  """An object relationship"""
+  DeckTemplate: DeckTemplate!
+  created_at: timestamptz!
+  deckTemplate_id: Int!
+  id: Int!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+columns and relationships of "DeckCard"
+"""
+type DeckCard {
+  """An object relationship"""
+  Deck: Deck!
+
+  """An object relationship"""
+  DeckTemplateCard: DeckTemplateCard
+
+  """An array relationship"""
+  Generations(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): [Generation!]!
+
+  """An aggregate relationship"""
+  Generations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): Generation_aggregate!
+  config: String
+  created_at: timestamptz!
+  deckTemplateCard_id: Int
+  deck_id: Int!
+  id: Int!
+  index: Int!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "DeckCard"
+"""
+type DeckCard_aggregate {
+  aggregate: DeckCard_aggregate_fields
+  nodes: [DeckCard!]!
+}
+
+input DeckCard_aggregate_bool_exp {
+  count: DeckCard_aggregate_bool_exp_count
+}
+
+input DeckCard_aggregate_bool_exp_count {
+  arguments: [DeckCard_select_column!]
+  distinct: Boolean
+  filter: DeckCard_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "DeckCard"
+"""
+type DeckCard_aggregate_fields {
+  avg: DeckCard_avg_fields
+  count(columns: [DeckCard_select_column!], distinct: Boolean): Int!
+  max: DeckCard_max_fields
+  min: DeckCard_min_fields
+  stddev: DeckCard_stddev_fields
+  stddev_pop: DeckCard_stddev_pop_fields
+  stddev_samp: DeckCard_stddev_samp_fields
+  sum: DeckCard_sum_fields
+  var_pop: DeckCard_var_pop_fields
+  var_samp: DeckCard_var_samp_fields
+  variance: DeckCard_variance_fields
+}
+
+"""
+order by aggregate values of table "DeckCard"
+"""
+input DeckCard_aggregate_order_by {
+  avg: DeckCard_avg_order_by
+  count: order_by
+  max: DeckCard_max_order_by
+  min: DeckCard_min_order_by
+  stddev: DeckCard_stddev_order_by
+  stddev_pop: DeckCard_stddev_pop_order_by
+  stddev_samp: DeckCard_stddev_samp_order_by
+  sum: DeckCard_sum_order_by
+  var_pop: DeckCard_var_pop_order_by
+  var_samp: DeckCard_var_samp_order_by
+  variance: DeckCard_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "DeckCard"
+"""
+input DeckCard_arr_rel_insert_input {
+  data: [DeckCard_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: DeckCard_on_conflict
+}
+
+"""aggregate avg on columns"""
+type DeckCard_avg_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by avg() on columns of table "DeckCard"
+"""
+input DeckCard_avg_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "DeckCard". All fields are combined with a logical 'AND'.
+"""
+input DeckCard_bool_exp {
+  Deck: Deck_bool_exp
+  DeckTemplateCard: DeckTemplateCard_bool_exp
+  Generations: Generation_bool_exp
+  Generations_aggregate: Generation_aggregate_bool_exp
+  _and: [DeckCard_bool_exp!]
+  _not: DeckCard_bool_exp
+  _or: [DeckCard_bool_exp!]
+  config: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  deckTemplateCard_id: Int_comparison_exp
+  deck_id: Int_comparison_exp
+  id: Int_comparison_exp
+  index: Int_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "DeckCard"
+"""
+enum DeckCard_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  DeckCard_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "DeckCard"
+"""
+input DeckCard_inc_input {
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+}
+
+"""
+input type for inserting data into table "DeckCard"
+"""
+input DeckCard_insert_input {
+  Deck: Deck_obj_rel_insert_input
+  DeckTemplateCard: DeckTemplateCard_obj_rel_insert_input
+  Generations: Generation_arr_rel_insert_input
+  config: String
+  created_at: timestamptz
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type DeckCard_max_fields {
+  config: String
+  created_at: timestamptz
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "DeckCard"
+"""
+input DeckCard_max_order_by {
+  config: order_by
+  created_at: order_by
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type DeckCard_min_fields {
+  config: String
+  created_at: timestamptz
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "DeckCard"
+"""
+input DeckCard_min_order_by {
+  config: order_by
+  created_at: order_by
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "DeckCard"
+"""
+type DeckCard_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [DeckCard!]!
+}
+
+"""
+input type for inserting object relation for remote table "DeckCard"
+"""
+input DeckCard_obj_rel_insert_input {
+  data: DeckCard_insert_input!
+
+  """upsert condition"""
+  on_conflict: DeckCard_on_conflict
+}
+
+"""
+on_conflict condition type for table "DeckCard"
+"""
+input DeckCard_on_conflict {
+  constraint: DeckCard_constraint!
+  update_columns: [DeckCard_update_column!]! = []
+  where: DeckCard_bool_exp
+}
+
+"""Ordering options when selecting data from "DeckCard"."""
+input DeckCard_order_by {
+  Deck: Deck_order_by
+  DeckTemplateCard: DeckTemplateCard_order_by
+  Generations_aggregate: Generation_aggregate_order_by
+  config: order_by
+  created_at: order_by
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: DeckCard"""
+input DeckCard_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "DeckCard"
+"""
+enum DeckCard_select_column {
+  """column name"""
+  config
+
+  """column name"""
+  created_at
+
+  """column name"""
+  deckTemplateCard_id
+
+  """column name"""
+  deck_id
+
+  """column name"""
+  id
+
+  """column name"""
+  index
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "DeckCard"
+"""
+input DeckCard_set_input {
+  config: String
+  created_at: timestamptz
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type DeckCard_stddev_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by stddev() on columns of table "DeckCard"
+"""
+input DeckCard_stddev_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type DeckCard_stddev_pop_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by stddev_pop() on columns of table "DeckCard"
+"""
+input DeckCard_stddev_pop_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type DeckCard_stddev_samp_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by stddev_samp() on columns of table "DeckCard"
+"""
+input DeckCard_stddev_samp_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+Streaming cursor of the table "DeckCard"
+"""
+input DeckCard_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: DeckCard_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input DeckCard_stream_cursor_value_input {
+  config: String
+  created_at: timestamptz
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate sum on columns"""
+type DeckCard_sum_fields {
+  deckTemplateCard_id: Int
+  deck_id: Int
+  id: Int
+  index: Int
+}
+
+"""
+order by sum() on columns of table "DeckCard"
+"""
+input DeckCard_sum_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+update columns of table "DeckCard"
+"""
+enum DeckCard_update_column {
+  """column name"""
+  config
+
+  """column name"""
+  created_at
+
+  """column name"""
+  deckTemplateCard_id
+
+  """column name"""
+  deck_id
+
+  """column name"""
+  id
+
+  """column name"""
+  index
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+input DeckCard_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: DeckCard_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: DeckCard_set_input
+
+  """filter the rows which have to be updated"""
+  where: DeckCard_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type DeckCard_var_pop_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by var_pop() on columns of table "DeckCard"
+"""
+input DeckCard_var_pop_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate var_samp on columns"""
+type DeckCard_var_samp_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by var_samp() on columns of table "DeckCard"
+"""
+input DeckCard_var_samp_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate variance on columns"""
+type DeckCard_variance_fields {
+  deckTemplateCard_id: Float
+  deck_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by variance() on columns of table "DeckCard"
+"""
+input DeckCard_variance_order_by {
+  deckTemplateCard_id: order_by
+  deck_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+columns and relationships of "DeckTemplate"
+"""
+type DeckTemplate {
+  """An array relationship"""
+  DeckTemplateCards(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplateCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplateCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): [DeckTemplateCard!]!
+
+  """An aggregate relationship"""
+  DeckTemplateCards_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplateCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplateCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): DeckTemplateCard_aggregate!
+
+  """An array relationship"""
+  Decks(
+    """distinct select on columns"""
+    distinct_on: [Deck_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Deck_order_by!]
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): [Deck!]!
+
+  """An aggregate relationship"""
+  Decks_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Deck_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Deck_order_by!]
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): Deck_aggregate!
+  created_at: timestamptz!
+  id: Int!
+  name: String
+  updated_at: timestamptz!
+}
+
+"""
+columns and relationships of "DeckTemplateCard"
+"""
+type DeckTemplateCard {
+  """An array relationship"""
+  DeckCards(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): [DeckCard!]!
+
+  """An aggregate relationship"""
+  DeckCards_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): DeckCard_aggregate!
+
+  """An object relationship"""
+  DeckTemplate: DeckTemplate!
+  config: String
+  created_at: timestamptz!
+  deckTemplate_id: Int!
+  id: Int!
+  index: Int!
+  name: String
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "DeckTemplateCard"
+"""
+type DeckTemplateCard_aggregate {
+  aggregate: DeckTemplateCard_aggregate_fields
+  nodes: [DeckTemplateCard!]!
+}
+
+input DeckTemplateCard_aggregate_bool_exp {
+  count: DeckTemplateCard_aggregate_bool_exp_count
+}
+
+input DeckTemplateCard_aggregate_bool_exp_count {
+  arguments: [DeckTemplateCard_select_column!]
+  distinct: Boolean
+  filter: DeckTemplateCard_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "DeckTemplateCard"
+"""
+type DeckTemplateCard_aggregate_fields {
+  avg: DeckTemplateCard_avg_fields
+  count(columns: [DeckTemplateCard_select_column!], distinct: Boolean): Int!
+  max: DeckTemplateCard_max_fields
+  min: DeckTemplateCard_min_fields
+  stddev: DeckTemplateCard_stddev_fields
+  stddev_pop: DeckTemplateCard_stddev_pop_fields
+  stddev_samp: DeckTemplateCard_stddev_samp_fields
+  sum: DeckTemplateCard_sum_fields
+  var_pop: DeckTemplateCard_var_pop_fields
+  var_samp: DeckTemplateCard_var_samp_fields
+  variance: DeckTemplateCard_variance_fields
+}
+
+"""
+order by aggregate values of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_aggregate_order_by {
+  avg: DeckTemplateCard_avg_order_by
+  count: order_by
+  max: DeckTemplateCard_max_order_by
+  min: DeckTemplateCard_min_order_by
+  stddev: DeckTemplateCard_stddev_order_by
+  stddev_pop: DeckTemplateCard_stddev_pop_order_by
+  stddev_samp: DeckTemplateCard_stddev_samp_order_by
+  sum: DeckTemplateCard_sum_order_by
+  var_pop: DeckTemplateCard_var_pop_order_by
+  var_samp: DeckTemplateCard_var_samp_order_by
+  variance: DeckTemplateCard_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "DeckTemplateCard"
+"""
+input DeckTemplateCard_arr_rel_insert_input {
+  data: [DeckTemplateCard_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: DeckTemplateCard_on_conflict
+}
+
+"""aggregate avg on columns"""
+type DeckTemplateCard_avg_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by avg() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_avg_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "DeckTemplateCard". All fields are combined with a logical 'AND'.
+"""
+input DeckTemplateCard_bool_exp {
+  DeckCards: DeckCard_bool_exp
+  DeckCards_aggregate: DeckCard_aggregate_bool_exp
+  DeckTemplate: DeckTemplate_bool_exp
+  _and: [DeckTemplateCard_bool_exp!]
+  _not: DeckTemplateCard_bool_exp
+  _or: [DeckTemplateCard_bool_exp!]
+  config: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  deckTemplate_id: Int_comparison_exp
+  id: Int_comparison_exp
+  index: Int_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "DeckTemplateCard"
+"""
+enum DeckTemplateCard_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  DeckTemplateCard_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "DeckTemplateCard"
+"""
+input DeckTemplateCard_inc_input {
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+}
+
+"""
+input type for inserting data into table "DeckTemplateCard"
+"""
+input DeckTemplateCard_insert_input {
+  DeckCards: DeckCard_arr_rel_insert_input
+  DeckTemplate: DeckTemplate_obj_rel_insert_input
+  config: String
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type DeckTemplateCard_max_fields {
+  config: String
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_max_order_by {
+  config: order_by
+  created_at: order_by
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type DeckTemplateCard_min_fields {
+  config: String
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_min_order_by {
+  config: order_by
+  created_at: order_by
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "DeckTemplateCard"
+"""
+type DeckTemplateCard_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [DeckTemplateCard!]!
+}
+
+"""
+input type for inserting object relation for remote table "DeckTemplateCard"
+"""
+input DeckTemplateCard_obj_rel_insert_input {
+  data: DeckTemplateCard_insert_input!
+
+  """upsert condition"""
+  on_conflict: DeckTemplateCard_on_conflict
+}
+
+"""
+on_conflict condition type for table "DeckTemplateCard"
+"""
+input DeckTemplateCard_on_conflict {
+  constraint: DeckTemplateCard_constraint!
+  update_columns: [DeckTemplateCard_update_column!]! = []
+  where: DeckTemplateCard_bool_exp
+}
+
+"""Ordering options when selecting data from "DeckTemplateCard"."""
+input DeckTemplateCard_order_by {
+  DeckCards_aggregate: DeckCard_aggregate_order_by
+  DeckTemplate: DeckTemplate_order_by
+  config: order_by
+  created_at: order_by
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: DeckTemplateCard"""
+input DeckTemplateCard_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "DeckTemplateCard"
+"""
+enum DeckTemplateCard_select_column {
+  """column name"""
+  config
+
+  """column name"""
+  created_at
+
+  """column name"""
+  deckTemplate_id
+
+  """column name"""
+  id
+
+  """column name"""
+  index
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "DeckTemplateCard"
+"""
+input DeckTemplateCard_set_input {
+  config: String
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type DeckTemplateCard_stddev_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by stddev() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_stddev_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type DeckTemplateCard_stddev_pop_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by stddev_pop() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_stddev_pop_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type DeckTemplateCard_stddev_samp_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by stddev_samp() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_stddev_samp_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+Streaming cursor of the table "DeckTemplateCard"
+"""
+input DeckTemplateCard_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: DeckTemplateCard_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input DeckTemplateCard_stream_cursor_value_input {
+  config: String
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate sum on columns"""
+type DeckTemplateCard_sum_fields {
+  deckTemplate_id: Int
+  id: Int
+  index: Int
+}
+
+"""
+order by sum() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_sum_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+update columns of table "DeckTemplateCard"
+"""
+enum DeckTemplateCard_update_column {
+  """column name"""
+  config
+
+  """column name"""
+  created_at
+
+  """column name"""
+  deckTemplate_id
+
+  """column name"""
+  id
+
+  """column name"""
+  index
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+input DeckTemplateCard_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: DeckTemplateCard_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: DeckTemplateCard_set_input
+
+  """filter the rows which have to be updated"""
+  where: DeckTemplateCard_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type DeckTemplateCard_var_pop_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by var_pop() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_var_pop_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate var_samp on columns"""
+type DeckTemplateCard_var_samp_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by var_samp() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_var_samp_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""aggregate variance on columns"""
+type DeckTemplateCard_variance_fields {
+  deckTemplate_id: Float
+  id: Float
+  index: Float
+}
+
+"""
+order by variance() on columns of table "DeckTemplateCard"
+"""
+input DeckTemplateCard_variance_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+  index: order_by
+}
+
+"""
+aggregated selection of "DeckTemplate"
+"""
+type DeckTemplate_aggregate {
+  aggregate: DeckTemplate_aggregate_fields
+  nodes: [DeckTemplate!]!
+}
+
+"""
+aggregate fields of "DeckTemplate"
+"""
+type DeckTemplate_aggregate_fields {
+  avg: DeckTemplate_avg_fields
+  count(columns: [DeckTemplate_select_column!], distinct: Boolean): Int!
+  max: DeckTemplate_max_fields
+  min: DeckTemplate_min_fields
+  stddev: DeckTemplate_stddev_fields
+  stddev_pop: DeckTemplate_stddev_pop_fields
+  stddev_samp: DeckTemplate_stddev_samp_fields
+  sum: DeckTemplate_sum_fields
+  var_pop: DeckTemplate_var_pop_fields
+  var_samp: DeckTemplate_var_samp_fields
+  variance: DeckTemplate_variance_fields
+}
+
+"""aggregate avg on columns"""
+type DeckTemplate_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "DeckTemplate". All fields are combined with a logical 'AND'.
+"""
+input DeckTemplate_bool_exp {
+  DeckTemplateCards: DeckTemplateCard_bool_exp
+  DeckTemplateCards_aggregate: DeckTemplateCard_aggregate_bool_exp
+  Decks: Deck_bool_exp
+  Decks_aggregate: Deck_aggregate_bool_exp
+  _and: [DeckTemplate_bool_exp!]
+  _not: DeckTemplate_bool_exp
+  _or: [DeckTemplate_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "DeckTemplate"
+"""
+enum DeckTemplate_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  DeckTemplate_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "DeckTemplate"
+"""
+input DeckTemplate_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "DeckTemplate"
+"""
+input DeckTemplate_insert_input {
+  DeckTemplateCards: DeckTemplateCard_arr_rel_insert_input
+  Decks: Deck_arr_rel_insert_input
+  created_at: timestamptz
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type DeckTemplate_max_fields {
+  created_at: timestamptz
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate min on columns"""
+type DeckTemplate_min_fields {
+  created_at: timestamptz
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "DeckTemplate"
+"""
+type DeckTemplate_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [DeckTemplate!]!
+}
+
+"""
+input type for inserting object relation for remote table "DeckTemplate"
+"""
+input DeckTemplate_obj_rel_insert_input {
+  data: DeckTemplate_insert_input!
+
+  """upsert condition"""
+  on_conflict: DeckTemplate_on_conflict
+}
+
+"""
+on_conflict condition type for table "DeckTemplate"
+"""
+input DeckTemplate_on_conflict {
+  constraint: DeckTemplate_constraint!
+  update_columns: [DeckTemplate_update_column!]! = []
+  where: DeckTemplate_bool_exp
+}
+
+"""Ordering options when selecting data from "DeckTemplate"."""
+input DeckTemplate_order_by {
+  DeckTemplateCards_aggregate: DeckTemplateCard_aggregate_order_by
+  Decks_aggregate: Deck_aggregate_order_by
+  created_at: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: DeckTemplate"""
+input DeckTemplate_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "DeckTemplate"
+"""
+enum DeckTemplate_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "DeckTemplate"
+"""
+input DeckTemplate_set_input {
+  created_at: timestamptz
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type DeckTemplate_stddev_fields {
+  id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type DeckTemplate_stddev_pop_fields {
+  id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type DeckTemplate_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "DeckTemplate"
+"""
+input DeckTemplate_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: DeckTemplate_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input DeckTemplate_stream_cursor_value_input {
+  created_at: timestamptz
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate sum on columns"""
+type DeckTemplate_sum_fields {
+  id: Int
+}
+
+"""
+update columns of table "DeckTemplate"
+"""
+enum DeckTemplate_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+input DeckTemplate_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: DeckTemplate_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: DeckTemplate_set_input
+
+  """filter the rows which have to be updated"""
+  where: DeckTemplate_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type DeckTemplate_var_pop_fields {
+  id: Float
+}
+
+"""aggregate var_samp on columns"""
+type DeckTemplate_var_samp_fields {
+  id: Float
+}
+
+"""aggregate variance on columns"""
+type DeckTemplate_variance_fields {
+  id: Float
+}
+
+"""
+aggregated selection of "Deck"
+"""
+type Deck_aggregate {
+  aggregate: Deck_aggregate_fields
+  nodes: [Deck!]!
+}
+
+input Deck_aggregate_bool_exp {
+  count: Deck_aggregate_bool_exp_count
+}
+
+input Deck_aggregate_bool_exp_count {
+  arguments: [Deck_select_column!]
+  distinct: Boolean
+  filter: Deck_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "Deck"
+"""
+type Deck_aggregate_fields {
+  avg: Deck_avg_fields
+  count(columns: [Deck_select_column!], distinct: Boolean): Int!
+  max: Deck_max_fields
+  min: Deck_min_fields
+  stddev: Deck_stddev_fields
+  stddev_pop: Deck_stddev_pop_fields
+  stddev_samp: Deck_stddev_samp_fields
+  sum: Deck_sum_fields
+  var_pop: Deck_var_pop_fields
+  var_samp: Deck_var_samp_fields
+  variance: Deck_variance_fields
+}
+
+"""
+order by aggregate values of table "Deck"
+"""
+input Deck_aggregate_order_by {
+  avg: Deck_avg_order_by
+  count: order_by
+  max: Deck_max_order_by
+  min: Deck_min_order_by
+  stddev: Deck_stddev_order_by
+  stddev_pop: Deck_stddev_pop_order_by
+  stddev_samp: Deck_stddev_samp_order_by
+  sum: Deck_sum_order_by
+  var_pop: Deck_var_pop_order_by
+  var_samp: Deck_var_samp_order_by
+  variance: Deck_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "Deck"
+"""
+input Deck_arr_rel_insert_input {
+  data: [Deck_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: Deck_on_conflict
+}
+
+"""aggregate avg on columns"""
+type Deck_avg_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "Deck"
+"""
+input Deck_avg_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "Deck". All fields are combined with a logical 'AND'.
+"""
+input Deck_bool_exp {
+  DeckCards: DeckCard_bool_exp
+  DeckCards_aggregate: DeckCard_aggregate_bool_exp
+  DeckTemplate: DeckTemplate_bool_exp
+  _and: [Deck_bool_exp!]
+  _not: Deck_bool_exp
+  _or: [Deck_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  deckTemplate_id: Int_comparison_exp
+  id: Int_comparison_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "Deck"
+"""
+enum Deck_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Deck_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "Deck"
+"""
+input Deck_inc_input {
+  deckTemplate_id: Int
+  id: Int
+}
+
+"""
+input type for inserting data into table "Deck"
+"""
+input Deck_insert_input {
+  DeckCards: DeckCard_arr_rel_insert_input
+  DeckTemplate: DeckTemplate_obj_rel_insert_input
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type Deck_max_fields {
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "Deck"
+"""
+input Deck_max_order_by {
+  created_at: order_by
+  deckTemplate_id: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type Deck_min_fields {
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "Deck"
+"""
+input Deck_min_order_by {
+  created_at: order_by
+  deckTemplate_id: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "Deck"
+"""
+type Deck_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Deck!]!
+}
+
+"""
+input type for inserting object relation for remote table "Deck"
+"""
+input Deck_obj_rel_insert_input {
+  data: Deck_insert_input!
+
+  """upsert condition"""
+  on_conflict: Deck_on_conflict
+}
+
+"""
+on_conflict condition type for table "Deck"
+"""
+input Deck_on_conflict {
+  constraint: Deck_constraint!
+  update_columns: [Deck_update_column!]! = []
+  where: Deck_bool_exp
+}
+
+"""Ordering options when selecting data from "Deck"."""
+input Deck_order_by {
+  DeckCards_aggregate: DeckCard_aggregate_order_by
+  DeckTemplate: DeckTemplate_order_by
+  created_at: order_by
+  deckTemplate_id: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: Deck"""
+input Deck_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "Deck"
+"""
+enum Deck_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  deckTemplate_id
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "Deck"
+"""
+input Deck_set_input {
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type Deck_stddev_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "Deck"
+"""
+input Deck_stddev_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type Deck_stddev_pop_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "Deck"
+"""
+input Deck_stddev_pop_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type Deck_stddev_samp_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "Deck"
+"""
+input Deck_stddev_samp_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""
+Streaming cursor of the table "Deck"
+"""
+input Deck_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: Deck_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input Deck_stream_cursor_value_input {
+  created_at: timestamptz
+  deckTemplate_id: Int
+  id: Int
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate sum on columns"""
+type Deck_sum_fields {
+  deckTemplate_id: Int
+  id: Int
+}
+
+"""
+order by sum() on columns of table "Deck"
+"""
+input Deck_sum_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""
+update columns of table "Deck"
+"""
+enum Deck_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  deckTemplate_id
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+input Deck_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: Deck_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: Deck_set_input
+
+  """filter the rows which have to be updated"""
+  where: Deck_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type Deck_var_pop_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "Deck"
+"""
+input Deck_var_pop_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type Deck_var_samp_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "Deck"
+"""
+input Deck_var_samp_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""aggregate variance on columns"""
+type Deck_variance_fields {
+  deckTemplate_id: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "Deck"
+"""
+input Deck_variance_order_by {
+  deckTemplate_id: order_by
+  id: order_by
+}
+
+"""
+columns and relationships of "GeneratedImage"
+"""
+type GeneratedImage {
+  """An object relationship"""
+  Generation: Generation!
+  created_at: timestamptz!
+  generation_id: Int!
+  id: Int!
+  image: String!
+  type: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "GeneratedImage"
+"""
+type GeneratedImage_aggregate {
+  aggregate: GeneratedImage_aggregate_fields
+  nodes: [GeneratedImage!]!
+}
+
+input GeneratedImage_aggregate_bool_exp {
+  count: GeneratedImage_aggregate_bool_exp_count
+}
+
+input GeneratedImage_aggregate_bool_exp_count {
+  arguments: [GeneratedImage_select_column!]
+  distinct: Boolean
+  filter: GeneratedImage_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "GeneratedImage"
+"""
+type GeneratedImage_aggregate_fields {
+  avg: GeneratedImage_avg_fields
+  count(columns: [GeneratedImage_select_column!], distinct: Boolean): Int!
+  max: GeneratedImage_max_fields
+  min: GeneratedImage_min_fields
+  stddev: GeneratedImage_stddev_fields
+  stddev_pop: GeneratedImage_stddev_pop_fields
+  stddev_samp: GeneratedImage_stddev_samp_fields
+  sum: GeneratedImage_sum_fields
+  var_pop: GeneratedImage_var_pop_fields
+  var_samp: GeneratedImage_var_samp_fields
+  variance: GeneratedImage_variance_fields
+}
+
+"""
+order by aggregate values of table "GeneratedImage"
+"""
+input GeneratedImage_aggregate_order_by {
+  avg: GeneratedImage_avg_order_by
+  count: order_by
+  max: GeneratedImage_max_order_by
+  min: GeneratedImage_min_order_by
+  stddev: GeneratedImage_stddev_order_by
+  stddev_pop: GeneratedImage_stddev_pop_order_by
+  stddev_samp: GeneratedImage_stddev_samp_order_by
+  sum: GeneratedImage_sum_order_by
+  var_pop: GeneratedImage_var_pop_order_by
+  var_samp: GeneratedImage_var_samp_order_by
+  variance: GeneratedImage_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "GeneratedImage"
+"""
+input GeneratedImage_arr_rel_insert_input {
+  data: [GeneratedImage_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: GeneratedImage_on_conflict
+}
+
+"""aggregate avg on columns"""
+type GeneratedImage_avg_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_avg_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "GeneratedImage". All fields are combined with a logical 'AND'.
+"""
+input GeneratedImage_bool_exp {
+  Generation: Generation_bool_exp
+  _and: [GeneratedImage_bool_exp!]
+  _not: GeneratedImage_bool_exp
+  _or: [GeneratedImage_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  generation_id: Int_comparison_exp
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  type: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "GeneratedImage"
+"""
+enum GeneratedImage_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  GeneratedImage_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "GeneratedImage"
+"""
+input GeneratedImage_inc_input {
+  generation_id: Int
+  id: Int
+}
+
+"""
+input type for inserting data into table "GeneratedImage"
+"""
+input GeneratedImage_insert_input {
+  Generation: Generation_obj_rel_insert_input
+  created_at: timestamptz
+  generation_id: Int
+  id: Int
+  image: String
+  type: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type GeneratedImage_max_fields {
+  created_at: timestamptz
+  generation_id: Int
+  id: Int
+  image: String
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_max_order_by {
+  created_at: order_by
+  generation_id: order_by
+  id: order_by
+  image: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type GeneratedImage_min_fields {
+  created_at: timestamptz
+  generation_id: Int
+  id: Int
+  image: String
+  type: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_min_order_by {
+  created_at: order_by
+  generation_id: order_by
+  id: order_by
+  image: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "GeneratedImage"
+"""
+type GeneratedImage_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [GeneratedImage!]!
+}
+
+"""
+on_conflict condition type for table "GeneratedImage"
+"""
+input GeneratedImage_on_conflict {
+  constraint: GeneratedImage_constraint!
+  update_columns: [GeneratedImage_update_column!]! = []
+  where: GeneratedImage_bool_exp
+}
+
+"""Ordering options when selecting data from "GeneratedImage"."""
+input GeneratedImage_order_by {
+  Generation: Generation_order_by
+  created_at: order_by
+  generation_id: order_by
+  id: order_by
+  image: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: GeneratedImage"""
+input GeneratedImage_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "GeneratedImage"
+"""
+enum GeneratedImage_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  generation_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "GeneratedImage"
+"""
+input GeneratedImage_set_input {
+  created_at: timestamptz
+  generation_id: Int
+  id: Int
+  image: String
+  type: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type GeneratedImage_stddev_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_stddev_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type GeneratedImage_stddev_pop_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_stddev_pop_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type GeneratedImage_stddev_samp_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_stddev_samp_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""
+Streaming cursor of the table "GeneratedImage"
+"""
+input GeneratedImage_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: GeneratedImage_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input GeneratedImage_stream_cursor_value_input {
+  created_at: timestamptz
+  generation_id: Int
+  id: Int
+  image: String
+  type: String
+  updated_at: timestamptz
+}
+
+"""aggregate sum on columns"""
+type GeneratedImage_sum_fields {
+  generation_id: Int
+  id: Int
+}
+
+"""
+order by sum() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_sum_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""
+update columns of table "GeneratedImage"
+"""
+enum GeneratedImage_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  generation_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+input GeneratedImage_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: GeneratedImage_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: GeneratedImage_set_input
+
+  """filter the rows which have to be updated"""
+  where: GeneratedImage_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type GeneratedImage_var_pop_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_var_pop_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type GeneratedImage_var_samp_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_var_samp_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""aggregate variance on columns"""
+type GeneratedImage_variance_fields {
+  generation_id: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "GeneratedImage"
+"""
+input GeneratedImage_variance_order_by {
+  generation_id: order_by
+  id: order_by
+}
+
+"""
+columns and relationships of "Generation"
+"""
+type Generation {
+  """An object relationship"""
+  DeckCard: DeckCard!
+
+  """An array relationship"""
+  GeneratedImages(
+    """distinct select on columns"""
+    distinct_on: [GeneratedImage_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [GeneratedImage_order_by!]
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): [GeneratedImage!]!
+
+  """An aggregate relationship"""
+  GeneratedImages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [GeneratedImage_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [GeneratedImage_order_by!]
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): GeneratedImage_aggregate!
+
+  """An object relationship"""
+  Generation: Generation
+
+  """An array relationship"""
+  Generations(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): [Generation!]!
+
+  """An aggregate relationship"""
+  Generations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): Generation_aggregate!
+  batch: uuid!
+  card_id: Int!
+  config: String
+  created_at: timestamptz!
+  derivedFrom: Int
+  id: Int!
+  prompt: String
+  updated_at: timestamptz!
+  variationText: String
+}
+
+"""
+aggregated selection of "Generation"
+"""
+type Generation_aggregate {
+  aggregate: Generation_aggregate_fields
+  nodes: [Generation!]!
+}
+
+input Generation_aggregate_bool_exp {
+  count: Generation_aggregate_bool_exp_count
+}
+
+input Generation_aggregate_bool_exp_count {
+  arguments: [Generation_select_column!]
+  distinct: Boolean
+  filter: Generation_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "Generation"
+"""
+type Generation_aggregate_fields {
+  avg: Generation_avg_fields
+  count(columns: [Generation_select_column!], distinct: Boolean): Int!
+  max: Generation_max_fields
+  min: Generation_min_fields
+  stddev: Generation_stddev_fields
+  stddev_pop: Generation_stddev_pop_fields
+  stddev_samp: Generation_stddev_samp_fields
+  sum: Generation_sum_fields
+  var_pop: Generation_var_pop_fields
+  var_samp: Generation_var_samp_fields
+  variance: Generation_variance_fields
+}
+
+"""
+order by aggregate values of table "Generation"
+"""
+input Generation_aggregate_order_by {
+  avg: Generation_avg_order_by
+  count: order_by
+  max: Generation_max_order_by
+  min: Generation_min_order_by
+  stddev: Generation_stddev_order_by
+  stddev_pop: Generation_stddev_pop_order_by
+  stddev_samp: Generation_stddev_samp_order_by
+  sum: Generation_sum_order_by
+  var_pop: Generation_var_pop_order_by
+  var_samp: Generation_var_samp_order_by
+  variance: Generation_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "Generation"
+"""
+input Generation_arr_rel_insert_input {
+  data: [Generation_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: Generation_on_conflict
+}
+
+"""aggregate avg on columns"""
+type Generation_avg_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "Generation"
+"""
+input Generation_avg_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "Generation". All fields are combined with a logical 'AND'.
+"""
+input Generation_bool_exp {
+  DeckCard: DeckCard_bool_exp
+  GeneratedImages: GeneratedImage_bool_exp
+  GeneratedImages_aggregate: GeneratedImage_aggregate_bool_exp
+  Generation: Generation_bool_exp
+  Generations: Generation_bool_exp
+  Generations_aggregate: Generation_aggregate_bool_exp
+  _and: [Generation_bool_exp!]
+  _not: Generation_bool_exp
+  _or: [Generation_bool_exp!]
+  batch: uuid_comparison_exp
+  card_id: Int_comparison_exp
+  config: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  derivedFrom: Int_comparison_exp
+  id: Int_comparison_exp
+  prompt: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  variationText: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "Generation"
+"""
+enum Generation_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Generation_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "Generation"
+"""
+input Generation_inc_input {
+  card_id: Int
+  derivedFrom: Int
+  id: Int
+}
+
+"""
+input type for inserting data into table "Generation"
+"""
+input Generation_insert_input {
+  DeckCard: DeckCard_obj_rel_insert_input
+  GeneratedImages: GeneratedImage_arr_rel_insert_input
+  Generation: Generation_obj_rel_insert_input
+  Generations: Generation_arr_rel_insert_input
+  batch: uuid
+  card_id: Int
+  config: String
+  created_at: timestamptz
+  derivedFrom: Int
+  id: Int
+  prompt: String
+  updated_at: timestamptz
+  variationText: String
+}
+
+"""aggregate max on columns"""
+type Generation_max_fields {
+  batch: uuid
+  card_id: Int
+  config: String
+  created_at: timestamptz
+  derivedFrom: Int
+  id: Int
+  prompt: String
+  updated_at: timestamptz
+  variationText: String
+}
+
+"""
+order by max() on columns of table "Generation"
+"""
+input Generation_max_order_by {
+  batch: order_by
+  card_id: order_by
+  config: order_by
+  created_at: order_by
+  derivedFrom: order_by
+  id: order_by
+  prompt: order_by
+  updated_at: order_by
+  variationText: order_by
+}
+
+"""aggregate min on columns"""
+type Generation_min_fields {
+  batch: uuid
+  card_id: Int
+  config: String
+  created_at: timestamptz
+  derivedFrom: Int
+  id: Int
+  prompt: String
+  updated_at: timestamptz
+  variationText: String
+}
+
+"""
+order by min() on columns of table "Generation"
+"""
+input Generation_min_order_by {
+  batch: order_by
+  card_id: order_by
+  config: order_by
+  created_at: order_by
+  derivedFrom: order_by
+  id: order_by
+  prompt: order_by
+  updated_at: order_by
+  variationText: order_by
+}
+
+"""
+response of any mutation on the table "Generation"
+"""
+type Generation_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Generation!]!
+}
+
+"""
+input type for inserting object relation for remote table "Generation"
+"""
+input Generation_obj_rel_insert_input {
+  data: Generation_insert_input!
+
+  """upsert condition"""
+  on_conflict: Generation_on_conflict
+}
+
+"""
+on_conflict condition type for table "Generation"
+"""
+input Generation_on_conflict {
+  constraint: Generation_constraint!
+  update_columns: [Generation_update_column!]! = []
+  where: Generation_bool_exp
+}
+
+"""Ordering options when selecting data from "Generation"."""
+input Generation_order_by {
+  DeckCard: DeckCard_order_by
+  GeneratedImages_aggregate: GeneratedImage_aggregate_order_by
+  Generation: Generation_order_by
+  Generations_aggregate: Generation_aggregate_order_by
+  batch: order_by
+  card_id: order_by
+  config: order_by
+  created_at: order_by
+  derivedFrom: order_by
+  id: order_by
+  prompt: order_by
+  updated_at: order_by
+  variationText: order_by
+}
+
+"""primary key columns input for table: Generation"""
+input Generation_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "Generation"
+"""
+enum Generation_select_column {
+  """column name"""
+  batch
+
+  """column name"""
+  card_id
+
+  """column name"""
+  config
+
+  """column name"""
+  created_at
+
+  """column name"""
+  derivedFrom
+
+  """column name"""
+  id
+
+  """column name"""
+  prompt
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  variationText
+}
+
+"""
+input type for updating data in table "Generation"
+"""
+input Generation_set_input {
+  batch: uuid
+  card_id: Int
+  config: String
+  created_at: timestamptz
+  derivedFrom: Int
+  id: Int
+  prompt: String
+  updated_at: timestamptz
+  variationText: String
+}
+
+"""aggregate stddev on columns"""
+type Generation_stddev_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "Generation"
+"""
+input Generation_stddev_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type Generation_stddev_pop_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "Generation"
+"""
+input Generation_stddev_pop_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type Generation_stddev_samp_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "Generation"
+"""
+input Generation_stddev_samp_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""
+Streaming cursor of the table "Generation"
+"""
+input Generation_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: Generation_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input Generation_stream_cursor_value_input {
+  batch: uuid
+  card_id: Int
+  config: String
+  created_at: timestamptz
+  derivedFrom: Int
+  id: Int
+  prompt: String
+  updated_at: timestamptz
+  variationText: String
+}
+
+"""aggregate sum on columns"""
+type Generation_sum_fields {
+  card_id: Int
+  derivedFrom: Int
+  id: Int
+}
+
+"""
+order by sum() on columns of table "Generation"
+"""
+input Generation_sum_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""
+update columns of table "Generation"
+"""
+enum Generation_update_column {
+  """column name"""
+  batch
+
+  """column name"""
+  card_id
+
+  """column name"""
+  config
+
+  """column name"""
+  created_at
+
+  """column name"""
+  derivedFrom
+
+  """column name"""
+  id
+
+  """column name"""
+  prompt
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  variationText
+}
+
+input Generation_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: Generation_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: Generation_set_input
+
+  """filter the rows which have to be updated"""
+  where: Generation_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type Generation_var_pop_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "Generation"
+"""
+input Generation_var_pop_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type Generation_var_samp_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "Generation"
+"""
+input Generation_var_samp_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""aggregate variance on columns"""
+type Generation_variance_fields {
+  card_id: Float
+  derivedFrom: Float
+  id: Float
+}
+
+"""
+order by variance() on columns of table "Generation"
+"""
+input Generation_variance_order_by {
+  card_id: order_by
+  derivedFrom: order_by
+  id: order_by
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""ordering argument of a cursor"""
+enum cursor_ordering {
+  """ascending ordering of the cursor"""
+  ASC
+
+  """descending ordering of the cursor"""
+  DESC
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "Deck"
+  """
+  delete_Deck(
+    """filter the rows which have to be deleted"""
+    where: Deck_bool_exp!
+  ): Deck_mutation_response
+
+  """
+  delete data from the table: "DeckCard"
+  """
+  delete_DeckCard(
+    """filter the rows which have to be deleted"""
+    where: DeckCard_bool_exp!
+  ): DeckCard_mutation_response
+
+  """
+  delete single row from the table: "DeckCard"
+  """
+  delete_DeckCard_by_pk(id: Int!): DeckCard
+
+  """
+  delete data from the table: "DeckTemplate"
+  """
+  delete_DeckTemplate(
+    """filter the rows which have to be deleted"""
+    where: DeckTemplate_bool_exp!
+  ): DeckTemplate_mutation_response
+
+  """
+  delete data from the table: "DeckTemplateCard"
+  """
+  delete_DeckTemplateCard(
+    """filter the rows which have to be deleted"""
+    where: DeckTemplateCard_bool_exp!
+  ): DeckTemplateCard_mutation_response
+
+  """
+  delete single row from the table: "DeckTemplateCard"
+  """
+  delete_DeckTemplateCard_by_pk(id: Int!): DeckTemplateCard
+
+  """
+  delete single row from the table: "DeckTemplate"
+  """
+  delete_DeckTemplate_by_pk(id: Int!): DeckTemplate
+
+  """
+  delete single row from the table: "Deck"
+  """
+  delete_Deck_by_pk(id: Int!): Deck
+
+  """
+  delete data from the table: "GeneratedImage"
+  """
+  delete_GeneratedImage(
+    """filter the rows which have to be deleted"""
+    where: GeneratedImage_bool_exp!
+  ): GeneratedImage_mutation_response
+
+  """
+  delete single row from the table: "GeneratedImage"
+  """
+  delete_GeneratedImage_by_pk(id: Int!): GeneratedImage
+
+  """
+  delete data from the table: "Generation"
+  """
+  delete_Generation(
+    """filter the rows which have to be deleted"""
+    where: Generation_bool_exp!
+  ): Generation_mutation_response
+
+  """
+  delete single row from the table: "Generation"
+  """
+  delete_Generation_by_pk(id: Int!): Generation
+
+  """
+  insert data into the table: "Deck"
+  """
+  insert_Deck(
+    """the rows to be inserted"""
+    objects: [Deck_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: Deck_on_conflict
+  ): Deck_mutation_response
+
+  """
+  insert data into the table: "DeckCard"
+  """
+  insert_DeckCard(
+    """the rows to be inserted"""
+    objects: [DeckCard_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: DeckCard_on_conflict
+  ): DeckCard_mutation_response
+
+  """
+  insert a single row into the table: "DeckCard"
+  """
+  insert_DeckCard_one(
+    """the row to be inserted"""
+    object: DeckCard_insert_input!
+
+    """upsert condition"""
+    on_conflict: DeckCard_on_conflict
+  ): DeckCard
+
+  """
+  insert data into the table: "DeckTemplate"
+  """
+  insert_DeckTemplate(
+    """the rows to be inserted"""
+    objects: [DeckTemplate_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: DeckTemplate_on_conflict
+  ): DeckTemplate_mutation_response
+
+  """
+  insert data into the table: "DeckTemplateCard"
+  """
+  insert_DeckTemplateCard(
+    """the rows to be inserted"""
+    objects: [DeckTemplateCard_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: DeckTemplateCard_on_conflict
+  ): DeckTemplateCard_mutation_response
+
+  """
+  insert a single row into the table: "DeckTemplateCard"
+  """
+  insert_DeckTemplateCard_one(
+    """the row to be inserted"""
+    object: DeckTemplateCard_insert_input!
+
+    """upsert condition"""
+    on_conflict: DeckTemplateCard_on_conflict
+  ): DeckTemplateCard
+
+  """
+  insert a single row into the table: "DeckTemplate"
+  """
+  insert_DeckTemplate_one(
+    """the row to be inserted"""
+    object: DeckTemplate_insert_input!
+
+    """upsert condition"""
+    on_conflict: DeckTemplate_on_conflict
+  ): DeckTemplate
+
+  """
+  insert a single row into the table: "Deck"
+  """
+  insert_Deck_one(
+    """the row to be inserted"""
+    object: Deck_insert_input!
+
+    """upsert condition"""
+    on_conflict: Deck_on_conflict
+  ): Deck
+
+  """
+  insert data into the table: "GeneratedImage"
+  """
+  insert_GeneratedImage(
+    """the rows to be inserted"""
+    objects: [GeneratedImage_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: GeneratedImage_on_conflict
+  ): GeneratedImage_mutation_response
+
+  """
+  insert a single row into the table: "GeneratedImage"
+  """
+  insert_GeneratedImage_one(
+    """the row to be inserted"""
+    object: GeneratedImage_insert_input!
+
+    """upsert condition"""
+    on_conflict: GeneratedImage_on_conflict
+  ): GeneratedImage
+
+  """
+  insert data into the table: "Generation"
+  """
+  insert_Generation(
+    """the rows to be inserted"""
+    objects: [Generation_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: Generation_on_conflict
+  ): Generation_mutation_response
+
+  """
+  insert a single row into the table: "Generation"
+  """
+  insert_Generation_one(
+    """the row to be inserted"""
+    object: Generation_insert_input!
+
+    """upsert condition"""
+    on_conflict: Generation_on_conflict
+  ): Generation
+
+  """
+  update data of the table: "Deck"
+  """
+  update_Deck(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Deck_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Deck_set_input
+
+    """filter the rows which have to be updated"""
+    where: Deck_bool_exp!
+  ): Deck_mutation_response
+
+  """
+  update data of the table: "DeckCard"
+  """
+  update_DeckCard(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: DeckCard_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: DeckCard_set_input
+
+    """filter the rows which have to be updated"""
+    where: DeckCard_bool_exp!
+  ): DeckCard_mutation_response
+
+  """
+  update single row of the table: "DeckCard"
+  """
+  update_DeckCard_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: DeckCard_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: DeckCard_set_input
+    pk_columns: DeckCard_pk_columns_input!
+  ): DeckCard
+
+  """
+  update multiples rows of table: "DeckCard"
+  """
+  update_DeckCard_many(
+    """updates to execute, in order"""
+    updates: [DeckCard_updates!]!
+  ): [DeckCard_mutation_response]
+
+  """
+  update data of the table: "DeckTemplate"
+  """
+  update_DeckTemplate(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: DeckTemplate_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: DeckTemplate_set_input
+
+    """filter the rows which have to be updated"""
+    where: DeckTemplate_bool_exp!
+  ): DeckTemplate_mutation_response
+
+  """
+  update data of the table: "DeckTemplateCard"
+  """
+  update_DeckTemplateCard(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: DeckTemplateCard_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: DeckTemplateCard_set_input
+
+    """filter the rows which have to be updated"""
+    where: DeckTemplateCard_bool_exp!
+  ): DeckTemplateCard_mutation_response
+
+  """
+  update single row of the table: "DeckTemplateCard"
+  """
+  update_DeckTemplateCard_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: DeckTemplateCard_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: DeckTemplateCard_set_input
+    pk_columns: DeckTemplateCard_pk_columns_input!
+  ): DeckTemplateCard
+
+  """
+  update multiples rows of table: "DeckTemplateCard"
+  """
+  update_DeckTemplateCard_many(
+    """updates to execute, in order"""
+    updates: [DeckTemplateCard_updates!]!
+  ): [DeckTemplateCard_mutation_response]
+
+  """
+  update single row of the table: "DeckTemplate"
+  """
+  update_DeckTemplate_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: DeckTemplate_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: DeckTemplate_set_input
+    pk_columns: DeckTemplate_pk_columns_input!
+  ): DeckTemplate
+
+  """
+  update multiples rows of table: "DeckTemplate"
+  """
+  update_DeckTemplate_many(
+    """updates to execute, in order"""
+    updates: [DeckTemplate_updates!]!
+  ): [DeckTemplate_mutation_response]
+
+  """
+  update single row of the table: "Deck"
+  """
+  update_Deck_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Deck_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Deck_set_input
+    pk_columns: Deck_pk_columns_input!
+  ): Deck
+
+  """
+  update multiples rows of table: "Deck"
+  """
+  update_Deck_many(
+    """updates to execute, in order"""
+    updates: [Deck_updates!]!
+  ): [Deck_mutation_response]
+
+  """
+  update data of the table: "GeneratedImage"
+  """
+  update_GeneratedImage(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: GeneratedImage_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: GeneratedImage_set_input
+
+    """filter the rows which have to be updated"""
+    where: GeneratedImage_bool_exp!
+  ): GeneratedImage_mutation_response
+
+  """
+  update single row of the table: "GeneratedImage"
+  """
+  update_GeneratedImage_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: GeneratedImage_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: GeneratedImage_set_input
+    pk_columns: GeneratedImage_pk_columns_input!
+  ): GeneratedImage
+
+  """
+  update multiples rows of table: "GeneratedImage"
+  """
+  update_GeneratedImage_many(
+    """updates to execute, in order"""
+    updates: [GeneratedImage_updates!]!
+  ): [GeneratedImage_mutation_response]
+
+  """
+  update data of the table: "Generation"
+  """
+  update_Generation(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Generation_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Generation_set_input
+
+    """filter the rows which have to be updated"""
+    where: Generation_bool_exp!
+  ): Generation_mutation_response
+
+  """
+  update single row of the table: "Generation"
+  """
+  update_Generation_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Generation_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Generation_set_input
+    pk_columns: Generation_pk_columns_input!
+  ): Generation
+
+  """
+  update multiples rows of table: "Generation"
+  """
+  update_Generation_many(
+    """updates to execute, in order"""
+    updates: [Generation_updates!]!
+  ): [Generation_mutation_response]
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "Deck"
+  """
+  Deck(
+    """distinct select on columns"""
+    distinct_on: [Deck_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Deck_order_by!]
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): [Deck!]!
+
+  """
+  fetch data from the table: "DeckCard"
+  """
+  DeckCard(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): [DeckCard!]!
+
+  """
+  fetch aggregated fields from the table: "DeckCard"
+  """
+  DeckCard_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): DeckCard_aggregate!
+
+  """fetch data from the table: "DeckCard" using primary key columns"""
+  DeckCard_by_pk(id: Int!): DeckCard
+
+  """
+  fetch data from the table: "DeckTemplate"
+  """
+  DeckTemplate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplate_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplate_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplate_bool_exp
+  ): [DeckTemplate!]!
+
+  """
+  fetch data from the table: "DeckTemplateCard"
+  """
+  DeckTemplateCard(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplateCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplateCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): [DeckTemplateCard!]!
+
+  """
+  fetch aggregated fields from the table: "DeckTemplateCard"
+  """
+  DeckTemplateCard_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplateCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplateCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): DeckTemplateCard_aggregate!
+
+  """
+  fetch data from the table: "DeckTemplateCard" using primary key columns
+  """
+  DeckTemplateCard_by_pk(id: Int!): DeckTemplateCard
+
+  """
+  fetch aggregated fields from the table: "DeckTemplate"
+  """
+  DeckTemplate_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplate_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplate_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplate_bool_exp
+  ): DeckTemplate_aggregate!
+
+  """fetch data from the table: "DeckTemplate" using primary key columns"""
+  DeckTemplate_by_pk(id: Int!): DeckTemplate
+
+  """
+  fetch aggregated fields from the table: "Deck"
+  """
+  Deck_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Deck_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Deck_order_by!]
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): Deck_aggregate!
+
+  """fetch data from the table: "Deck" using primary key columns"""
+  Deck_by_pk(id: Int!): Deck
+
+  """
+  fetch data from the table: "GeneratedImage"
+  """
+  GeneratedImage(
+    """distinct select on columns"""
+    distinct_on: [GeneratedImage_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [GeneratedImage_order_by!]
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): [GeneratedImage!]!
+
+  """
+  fetch aggregated fields from the table: "GeneratedImage"
+  """
+  GeneratedImage_aggregate(
+    """distinct select on columns"""
+    distinct_on: [GeneratedImage_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [GeneratedImage_order_by!]
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): GeneratedImage_aggregate!
+
+  """fetch data from the table: "GeneratedImage" using primary key columns"""
+  GeneratedImage_by_pk(id: Int!): GeneratedImage
+
+  """
+  fetch data from the table: "Generation"
+  """
+  Generation(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): [Generation!]!
+
+  """
+  fetch aggregated fields from the table: "Generation"
+  """
+  Generation_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): Generation_aggregate!
+
+  """fetch data from the table: "Generation" using primary key columns"""
+  Generation_by_pk(id: Int!): Generation
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "Deck"
+  """
+  Deck(
+    """distinct select on columns"""
+    distinct_on: [Deck_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Deck_order_by!]
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): [Deck!]!
+
+  """
+  fetch data from the table: "DeckCard"
+  """
+  DeckCard(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): [DeckCard!]!
+
+  """
+  fetch aggregated fields from the table: "DeckCard"
+  """
+  DeckCard_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): DeckCard_aggregate!
+
+  """fetch data from the table: "DeckCard" using primary key columns"""
+  DeckCard_by_pk(id: Int!): DeckCard
+
+  """
+  fetch data from the table in a streaming manner: "DeckCard"
+  """
+  DeckCard_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [DeckCard_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: DeckCard_bool_exp
+  ): [DeckCard!]!
+
+  """
+  fetch data from the table: "DeckTemplate"
+  """
+  DeckTemplate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplate_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplate_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplate_bool_exp
+  ): [DeckTemplate!]!
+
+  """
+  fetch data from the table: "DeckTemplateCard"
+  """
+  DeckTemplateCard(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplateCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplateCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): [DeckTemplateCard!]!
+
+  """
+  fetch aggregated fields from the table: "DeckTemplateCard"
+  """
+  DeckTemplateCard_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplateCard_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplateCard_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): DeckTemplateCard_aggregate!
+
+  """
+  fetch data from the table: "DeckTemplateCard" using primary key columns
+  """
+  DeckTemplateCard_by_pk(id: Int!): DeckTemplateCard
+
+  """
+  fetch data from the table in a streaming manner: "DeckTemplateCard"
+  """
+  DeckTemplateCard_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [DeckTemplateCard_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: DeckTemplateCard_bool_exp
+  ): [DeckTemplateCard!]!
+
+  """
+  fetch aggregated fields from the table: "DeckTemplate"
+  """
+  DeckTemplate_aggregate(
+    """distinct select on columns"""
+    distinct_on: [DeckTemplate_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [DeckTemplate_order_by!]
+
+    """filter the rows returned"""
+    where: DeckTemplate_bool_exp
+  ): DeckTemplate_aggregate!
+
+  """fetch data from the table: "DeckTemplate" using primary key columns"""
+  DeckTemplate_by_pk(id: Int!): DeckTemplate
+
+  """
+  fetch data from the table in a streaming manner: "DeckTemplate"
+  """
+  DeckTemplate_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [DeckTemplate_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: DeckTemplate_bool_exp
+  ): [DeckTemplate!]!
+
+  """
+  fetch aggregated fields from the table: "Deck"
+  """
+  Deck_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Deck_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Deck_order_by!]
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): Deck_aggregate!
+
+  """fetch data from the table: "Deck" using primary key columns"""
+  Deck_by_pk(id: Int!): Deck
+
+  """
+  fetch data from the table in a streaming manner: "Deck"
+  """
+  Deck_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [Deck_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: Deck_bool_exp
+  ): [Deck!]!
+
+  """
+  fetch data from the table: "GeneratedImage"
+  """
+  GeneratedImage(
+    """distinct select on columns"""
+    distinct_on: [GeneratedImage_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [GeneratedImage_order_by!]
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): [GeneratedImage!]!
+
+  """
+  fetch aggregated fields from the table: "GeneratedImage"
+  """
+  GeneratedImage_aggregate(
+    """distinct select on columns"""
+    distinct_on: [GeneratedImage_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [GeneratedImage_order_by!]
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): GeneratedImage_aggregate!
+
+  """fetch data from the table: "GeneratedImage" using primary key columns"""
+  GeneratedImage_by_pk(id: Int!): GeneratedImage
+
+  """
+  fetch data from the table in a streaming manner: "GeneratedImage"
+  """
+  GeneratedImage_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [GeneratedImage_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: GeneratedImage_bool_exp
+  ): [GeneratedImage!]!
+
+  """
+  fetch data from the table: "Generation"
+  """
+  Generation(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): [Generation!]!
+
+  """
+  fetch aggregated fields from the table: "Generation"
+  """
+  Generation_aggregate(
+    """distinct select on columns"""
+    distinct_on: [Generation_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Generation_order_by!]
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): Generation_aggregate!
+
+  """fetch data from the table: "Generation" using primary key columns"""
+  Generation_by_pk(id: Int!): Generation
+
+  """
+  fetch data from the table in a streaming manner: "Generation"
+  """
+  Generation_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [Generation_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: Generation_bool_exp
+  ): [Generation!]!
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}

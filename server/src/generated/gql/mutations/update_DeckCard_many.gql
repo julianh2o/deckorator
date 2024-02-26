@@ -1,0 +1,15 @@
+mutation update_DeckCard_many($updates: [DeckCard_updates!]!){
+    update_DeckCard_many(updates: $updates){
+        affected_rows
+        returning{
+            config
+            created_at
+            deckTemplateCard_id
+            deck_id
+            id
+            index
+            name
+            updated_at
+        }
+    }
+}

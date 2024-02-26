@@ -1,0 +1,10 @@
+schema:
+  - http://localhost:8080/v1/graphql
+overwrite: true
+generates:
+  ./src/generated/all.graphql:
+    plugins:
+      - schema-ast
+  ./src/generated/models.ts:
+    plugins:
+      - typescript

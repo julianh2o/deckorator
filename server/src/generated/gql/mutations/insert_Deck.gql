@@ -1,0 +1,12 @@
+mutation insert_Deck($objects: [Deck_insert_input!]!, $on_conflict: Deck_on_conflict){
+    insert_Deck(objects: $objects, on_conflict: $on_conflict){
+        affected_rows
+        returning{
+            created_at
+            deckTemplate_id
+            id
+            name
+            updated_at
+        }
+    }
+}

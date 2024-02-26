@@ -1,0 +1,12 @@
+mutation delete_Deck($where: Deck_bool_exp!){
+    delete_Deck(where: $where){
+        affected_rows
+        returning{
+            created_at
+            deckTemplate_id
+            id
+            name
+            updated_at
+        }
+    }
+}

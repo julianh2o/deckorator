@@ -1,0 +1,12 @@
+mutation update_Deck($_inc: Deck_inc_input, $_set: Deck_set_input, $where: Deck_bool_exp!){
+    update_Deck(_inc: $_inc, _set: $_set, where: $where){
+        affected_rows
+        returning{
+            created_at
+            deckTemplate_id
+            id
+            name
+            updated_at
+        }
+    }
+}

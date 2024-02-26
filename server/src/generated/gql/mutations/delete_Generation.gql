@@ -1,0 +1,16 @@
+mutation delete_Generation($where: Generation_bool_exp!){
+    delete_Generation(where: $where){
+        affected_rows
+        returning{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+    }
+}

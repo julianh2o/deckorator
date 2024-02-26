@@ -1,0 +1,11 @@
+mutation update_DeckTemplate_many($updates: [DeckTemplate_updates!]!){
+    update_DeckTemplate_many(updates: $updates){
+        affected_rows
+        returning{
+            created_at
+            id
+            name
+            updated_at
+        }
+    }
+}

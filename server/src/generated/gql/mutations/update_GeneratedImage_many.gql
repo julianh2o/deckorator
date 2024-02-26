@@ -1,0 +1,13 @@
+mutation update_GeneratedImage_many($updates: [GeneratedImage_updates!]!){
+    update_GeneratedImage_many(updates: $updates){
+        affected_rows
+        returning{
+            created_at
+            generation_id
+            id
+            image
+            type
+            updated_at
+        }
+    }
+}

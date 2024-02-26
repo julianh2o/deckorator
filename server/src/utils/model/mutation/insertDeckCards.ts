@@ -4,7 +4,7 @@ import _ from "lodash-es";
 
 const INSERT_DECK_CARDS = gql`
   mutation InsertDeckCards($cards: [DeckCard_insert_input!]!) {
-    insert_DeckCards(objects: $cards) {
+    insert_DeckCard(objects: $cards) {
       returning {
         id
       }

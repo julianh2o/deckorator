@@ -1,0 +1,18 @@
+query Generation_aggregate($columns: [Generation_select_column!], $distinct: Boolean, $distinct_on: [Generation_select_column!], $limit: Int, $offset: Int, $order_by: [Generation_order_by!], $where: Generation_bool_exp){
+    Generation_aggregate(distinct_on: $distinct_on, limit: $limit, offset: $offset, order_by: $order_by, where: $where){
+        aggregate{
+            count(columns: $columns, distinct: $distinct)
+        }
+        nodes{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+    }
+}

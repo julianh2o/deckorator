@@ -1,0 +1,13 @@
+mutation update_GeneratedImage($_inc: GeneratedImage_inc_input, $_set: GeneratedImage_set_input, $where: GeneratedImage_bool_exp!){
+    update_GeneratedImage(_inc: $_inc, _set: $_set, where: $where){
+        affected_rows
+        returning{
+            created_at
+            generation_id
+            id
+            image
+            type
+            updated_at
+        }
+    }
+}

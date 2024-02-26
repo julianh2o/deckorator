@@ -1,0 +1,53 @@
+subscription Generation($distinct_on: [GeneratedImage_select_column!], $limit: Int, $offset: Int, $order_by: [GeneratedImage_order_by!], $where: GeneratedImage_bool_exp, $distinct_on1: [Generation_select_column!], $limit1: Int, $offset1: Int, $order_by1: [Generation_order_by!], $where1: Generation_bool_exp, $distinct_on2: [Generation_select_column!], $limit2: Int, $offset2: Int, $order_by2: [Generation_order_by!], $where2: Generation_bool_exp){
+    Generation(distinct_on: $distinct_on2, limit: $limit2, offset: $offset2, order_by: $order_by2, where: $where2){
+        DeckCard{
+            config
+            created_at
+            deckTemplateCard_id
+            deck_id
+            id
+            index
+            name
+            updated_at
+        }
+        GeneratedImages(distinct_on: $distinct_on, limit: $limit, offset: $offset, order_by: $order_by, where: $where){
+            created_at
+            generation_id
+            id
+            image
+            type
+            updated_at
+        }
+        Generation{
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        Generations(distinct_on: $distinct_on1, limit: $limit1, offset: $offset1, order_by: $order_by1, where: $where1){
+            batch
+            card_id
+            config
+            created_at
+            derivedFrom
+            id
+            prompt
+            updated_at
+            variationText
+        }
+        batch
+        card_id
+        config
+        created_at
+        derivedFrom
+        id
+        prompt
+        updated_at
+        variationText
+    }
+}
