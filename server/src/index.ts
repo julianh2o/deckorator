@@ -7,8 +7,8 @@ import _ from "lodash";
 import { chatCompletion, execTemplate } from './utils/gpt.js';
 import minio from "./utils/minio.js";
 import p from "p-iteration";
-import { getTemplateCards } from './utils/model/query/getTemplateCards.js';
-import { client } from './utils/model/apolloClient.js';
+import { getTemplateCards } from './utils/hasura/query/getTemplateCards.js';
+import { client } from './utils/hasura/apolloClient.js';
 
 const app: Express = express();
 app.use(express.json());

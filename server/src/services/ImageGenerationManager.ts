@@ -2,7 +2,7 @@ import { JobType, Queue, QueueEvents, Worker } from 'bullmq';
 import * as comfyui from '../utils/comfyui.js';
 import _ from "lodash";
 import { DeckModel, DeckCardModel, GenerationModel, TarotCardFactory } from './CardFactory.js';
-import { insertGeneratedImages } from '../utils/model/mutation/insertGeneratedImages.js';
+import { insertGeneratedImages } from '../utils/hasura/mutation/insertGeneratedImages.js';
 
 const tarotFactory = new TarotCardFactory();
 
