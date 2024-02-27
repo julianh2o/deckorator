@@ -7,8 +7,8 @@ import _ from "lodash";
 import { chatCompletion, execTemplate } from './utils/gpt.js';
 import minio from "./utils/minio.js";
 import p from "p-iteration";
-import { getTemplateCards } from './utils/hasura/query/getTemplateCards.js';
 import { client } from './utils/hasura/apolloClient.js';
+import { DeckTemplate_By_PkDocument } from './generated/client/graphql.js';
 
 const app: Express = express();
 app.use(express.json());
@@ -17,7 +17,8 @@ const port = process.env.PORT || 3000;
 // This inserts a full deck of cards based on the specified DeckTemplate
 app.post("/populateDeckFromTemplate", async (req: Request, res: Response) => {
   const { id: deck_id, deckTemplate_id } = req.body.event.data.new;
-  const cards = await getTemplateCards(deckTemplate_id);
+  const response = await client.query({ query: DeckTemplate_By_PkDocument, variables: { id: deckTemplate_id } });
+  const cards = response.data.DeckTemplate_by_pk?.DeckTemplateCards;
 
   let index = 1;
   const inserts = _.map(cards, (card) => ({
@@ -49,7 +50,6 @@ app.post("/insertGeneration", async (req: Request, res: Response) => {
   await fs.promises.writeFile("./insertGeneration.json", JSON.stringify(req.body, undefined, 2));
   console.log("insertGeneration called");
   const generation = req.body.event.data.new as GenerationModel;
-  const generationDeep = await getGenerationDeep(generation.card_id);
   // const getTemplateCardsResult = await client.query({
   //   query: GET_TEMPLATE_CARDS,
   //   variables: { deckTemplate_id },
