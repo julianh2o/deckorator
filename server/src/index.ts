@@ -9,24 +9,28 @@ import minio from "./utils/minio.js";
 import p from "p-iteration";
 import { client } from './utils/hasura/apolloClient.js';
 import { DeckTemplate_By_PkDocument } from './generated/client/graphql.js';
+import * as DeckTemplateService from "./services/DeckTemplateService.js"
 
 const app: Express = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
 // Triggered when a new Deck is inserted
 // This inserts a full deck of cards based on the specified DeckTemplate
-app.post("/populateDeckFromTemplate", async (req: Request, res: Response) => {
-  const { id: deck_id, deckTemplate_id } = req.body.event.data.new;
-  const response = await client.query({ query: DeckTemplate_By_PkDocument, variables: { id: deckTemplate_id } });
-  const cards = response.data.DeckTemplate_by_pk?.DeckTemplateCards;
+app.post("/onDeckCreated", async (req: Request, res: Response) => {
+  await fs.promises.writeFile("./onDeckCreated.json", JSON.stringify(req.body, undefined, 2));
+  const { id: deck_id, deckTemplate } = req.body.event.data.new;
+  // const response = await client.query({ query: DeckTemplate_By_PkDocument, variables: { id: deckTemplate } });
+  // const cards = response.data.DeckTemplate_by_pk?.DeckTemplateCards;
 
   let index = 1;
+  const { cards } = await DeckTemplateService.loadDeckTemplate(deckTemplate);
+  console.log(cards);
   const inserts = _.map(cards, (card) => ({
     index: index++,
     name: card.name,
     deck_id,
     deckTemplateCard_id: card.id,
-    config: card.config
+    config: card
   }));
 
   res.sendStatus(200);
@@ -82,27 +86,7 @@ app.get("/testGpt", async (req: Request, res: Response) => {
   res.send(`<pre>${JSON.stringify(out, undefined, 2)}</pre>`);
 });
 
-const CreateDeckTemplateWithCard = gql`
-mutation CreateDeckTemplateWithCard {
-  insert_DeckTemplate(objects: {
-    name: "Test Deck Template",
-    DeckTemplateCards: {
-      data: {
-        index: 1,
-        name: "Test Card"
-      }
-    }
-  }) {
-    returning {
-      id
-    }
-  }
-}
-`;
-
 app.get("/", async (req: Request, res: Response) => {
-  const out = await client.mutate({ mutation: CreateDeckTemplateWithCard });
-  console.log(out);
   res.send("ok");
 });
 
